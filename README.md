@@ -111,9 +111,41 @@ survival_analysis/
 |-- scripts/
 |   |-- install_missing_r_deps.R
 |   `-- run_survival_analysis.R
-|-- instruction.txt
+|-- app.js
+|-- index.html
+|-- styles.css
+|-- vercel.json
 `-- README.md
 ```
+
+
+## Dashboard
+
+A static dashboard is now included at the repository root via `index.html`, `styles.css`, and `app.js`. It turns the generated analysis outputs in `outputs/` into a presentation-ready interface with:
+
+- KPI cards for sample size, censoring, peak hazard, and model quality
+- a lightweight SVG survival chart sourced from `km_horizon_summary.csv`
+- ranked churn-risk and retention-factor panels for Cox and AFT outputs
+- an image gallery of the generated Kaplan-Meier, hazard, and forest plots
+- Vercel-ready static hosting using `vercel.json`
+
+### Run locally
+
+Because the dashboard loads CSV files with `fetch`, serve the repo with a simple static file server instead of opening `index.html` directly from disk.
+
+```bash
+python -m http.server 8000
+```
+
+Then visit <http://localhost:8000>.
+
+### Deploy to Vercel
+
+1. Push this repository to GitHub, GitLab, or Bitbucket.
+2. Import the repo into Vercel.
+3. Use the **Other** framework preset.
+4. Leave the build command empty; this is a static app.
+5. Deploy. Vercel will serve `index.html` at the project root and preserve the `outputs/` assets used by the dashboard.
 
 ## How To Run
 

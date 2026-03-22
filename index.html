@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telecom Churn Survival Dashboard</title>
+    <meta
+      name="description"
+      content="Interactive dashboard for IBM telecom customer churn survival analysis, designed for static deployment on Vercel."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <nav class="topbar">
+          <span class="brand">Survival Analysis Dashboard</span>
+          <a class="button secondary" href="outputs/telecom_churn_survival_report.md">Open technical report</a>
+        </nav>
+
+        <div class="hero-grid">
+          <section>
+            <p class="eyebrow">IBM Telecom Customer Churn</p>
+            <h1>Retention insights focused on <span>when</span> customers churn.</h1>
+            <p class="lede">
+              A static dashboard powered by the repo’s generated survival-analysis outputs. It highlights churn timing,
+              risk drivers, retention levers, and model quality in a Vercel-ready experience.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#dashboard">Explore dashboard</a>
+              <a class="button ghost" href="README.md">Read project overview</a>
+            </div>
+          </section>
+
+          <aside class="hero-panel">
+            <div class="mini-stat">
+              <span class="label">Peak hazard month</span>
+              <strong id="hero-peak-month">--</strong>
+            </div>
+            <div class="mini-stat">
+              <span class="label">Cox C-index</span>
+              <strong id="hero-cox-cindex">--</strong>
+            </div>
+            <div class="mini-stat">
+              <span class="label">Best parametric model</span>
+              <strong id="hero-best-model">--</strong>
+            </div>
+            <div class="mini-stat accent">
+              <span class="label">Core story</span>
+              <p>Churn risk spikes early, making onboarding and contract strategy the highest-value retention levers.</p>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <main id="dashboard">
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Executive summary</p>
+              <h2>Key metrics at a glance</h2>
+            </div>
+            <p class="section-copy">Loaded directly from the generated CSV outputs in <code>outputs/tables/</code>.</p>
+          </div>
+          <div id="kpi-grid" class="kpi-grid"></div>
+        </section>
+
+        <section class="section two-column">
+          <article class="card chart-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Survival curve</p>
+                <h3>Probability of retaining customers over time</h3>
+              </div>
+              <span class="chip">Kaplan-Meier checkpoints</span>
+            </div>
+            <svg id="survival-chart" viewBox="0 0 640 320" class="chart" role="img" aria-label="Survival probability by month"></svg>
+            <div id="horizon-grid" class="horizon-grid"></div>
+          </article>
+
+          <article class="card insight-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Recommended actions</p>
+                <h3>How to use the analysis operationally</h3>
+              </div>
+            </div>
+            <ul class="insight-list">
+              <li>Prioritize first-90-day interventions because churn intensity peaks around month 1.</li>
+              <li>Use contract design as a primary retention lever; one- and two-year terms dominate the strongest protective effects.</li>
+              <li>Flag Offer E cohorts for rapid remediation, since they show materially worse churn timing in both Cox and AFT views.</li>
+              <li>Bundle online security, backup, and dependents-based messaging into lifecycle campaigns to lengthen customer survival.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="section two-column">
+          <article class="card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Hazard model</p>
+                <h3>Top churn accelerators</h3>
+              </div>
+              <span class="chip warning">Higher hazard ratio = higher churn risk</span>
+            </div>
+            <div id="risk-factors" class="factor-list"></div>
+          </article>
+
+          <article class="card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Retention model</p>
+                <h3>Top protective factors</h3>
+              </div>
+              <span class="chip success">Lower hazard ratio = stronger retention</span>
+            </div>
+            <div id="protective-factors" class="factor-list"></div>
+          </article>
+        </section>
+
+        <section class="section two-column">
+          <article class="card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">AFT interpretation</p>
+                <h3>Fastest churn accelerators</h3>
+              </div>
+              <span class="chip warning">Lower time ratio = shorter customer lifespan</span>
+            </div>
+            <div id="aft-accelerators" class="factor-list"></div>
+          </article>
+
+          <article class="card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">AFT interpretation</p>
+                <h3>Strongest survival extenders</h3>
+              </div>
+              <span class="chip success">Higher time ratio = longer customer lifespan</span>
+            </div>
+            <div id="aft-drivers" class="factor-list"></div>
+          </article>
+        </section>
+
+        <section class="section">
+          <article class="card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Model quality</p>
+                <h3>Parametric model comparison</h3>
+              </div>
+              <span class="chip">Sorted by AIC</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Model</th>
+                    <th>Effect scale</th>
+                    <th>AIC</th>
+                    <th>BIC</th>
+                    <th>C-index</th>
+                    <th>SE</th>
+                  </tr>
+                </thead>
+                <tbody id="model-table"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Visual outputs</p>
+              <h2>Generated plots from the survival workflow</h2>
+            </div>
+          </div>
+          <div class="plot-grid">
+            <a class="plot-card" href="outputs/plots/km_overall.png"><img src="outputs/plots/km_overall.png" alt="Overall Kaplan-Meier curve" /><span>Overall KM curve</span></a>
+            <a class="plot-card" href="outputs/plots/smoothed_hazard.png"><img src="outputs/plots/smoothed_hazard.png" alt="Smoothed hazard curve" /><span>Smoothed hazard</span></a>
+            <a class="plot-card" href="outputs/plots/km_by_contract.png"><img src="outputs/plots/km_by_contract.png" alt="Kaplan-Meier curve by contract" /><span>KM by contract</span></a>
+            <a class="plot-card" href="outputs/plots/cox_forest_plot.png"><img src="outputs/plots/cox_forest_plot.png" alt="Cox forest plot" /><span>Cox forest plot</span></a>
+            <a class="plot-card" href="outputs/plots/best_aft_forest_plot.png"><img src="outputs/plots/best_aft_forest_plot.png" alt="Best AFT forest plot" /><span>Best AFT forest plot</span></a>
+            <a class="plot-card" href="outputs/plots/cox_schoenfeld_diagnostics.png"><img src="outputs/plots/cox_schoenfeld_diagnostics.png" alt="Cox Schoenfeld diagnostics" /><span>PH diagnostics</span></a>
+          </div>
+        </section>
+
+        <section class="section deploy-section">
+          <article class="card deploy-card">
+            <div>
+              <p class="eyebrow">Deployment</p>
+              <h2>Vercel-ready static app</h2>
+              <p>
+                This dashboard is intentionally dependency-light: Vercel can host it as a static site directly from this repository,
+                while preserving links to the generated analysis artifacts under <code>outputs/</code>.
+              </p>
+            </div>
+            <ol>
+              <li>Import the repository into Vercel.</li>
+              <li>Leave the framework preset as <strong>Other</strong>.</li>
+              <li>No build command is required for this static dashboard.</li>
+              <li>Deploy and optionally assign a production domain.</li>
+            </ol>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
