@@ -1,0 +1,10 @@
+"analysis","strata","records","events","median_months","lower_95","upper_95"
+"Overall","Overall",7043,1869,NA,NA,NA
+"Contract","Month-to-Month",3610,1655,31,29,33
+"Contract","One Year",1550,166,NA,72,NA
+"Contract","Two Year",1883,48,NA,NA,NA
+"Internet Service","No",1526,113,NA,NA,NA
+"Internet Service","Yes",5517,1756,NA,NA,NA
+"Payment Method","Bank Withdrawal",3909,1329,NA,71,NA
+"Payment Method","Credit Card",2749,398,NA,NA,NA
+"Payment Method","Mailed Check",385,142,NA,43,NA

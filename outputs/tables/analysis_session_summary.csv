@@ -1,0 +1,9 @@
+"item","value"
+"Peak hazard month","1"
+"Peak hazard value","0.835223854449156"
+"Overall median survival",NA
+"Cox C-index","0.943376138657008"
+"Best parametric model","Gompertz"
+"Best parametric AIC","14459.1903362529"
+"Best parametric C-index","0.943329214975794"
+"Global PH p-value","1.54630515311073e-169"
