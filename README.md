@@ -1,6 +1,6 @@
-# IBM Telecom Churn Survival Analysis
+# IBM Telecom Customer Churn using Survival Analysis
 
-Standard churn models treat the problem as a binary classification task, predicting whether a customer will churn. In contrast, survival analysis models the timing of churn, retaining information typically discarded by classification approaches, including:
+Standard churn models treat churn problem as a binary classification task, predicting whether a customer will churn or not. In contrast, survival analysis models the timing of churn, retaining information typically discarded by classification approaches, including:
 
 - the ordering of churn times,
 - varying exposure durations across customers, and
