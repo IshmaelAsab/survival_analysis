@@ -1,8 +1,14 @@
 # IBM Telecom Churn Survival Analysis
 
-This repository contains a survival analysis of IBM telecom customer churn using time-to-event methods rather than a simple churn / no-churn classifier. The project focuses on identifying both who is at higher churn risk and when that risk is concentrated over customer tenure.
+Standard churn models treat the problem as a binary classification task, predicting whether a customer will churn. In contrast, survival analysis models the timing of churn, retaining information typically discarded by classification approaches, including:
 
-The full technical report is available at [outputs/telecom_churn_survival_report.md](outputs/telecom_churn_survival_report.md).
+- the ordering of churn times,
+- varying exposure durations across customers, and
+- right-censoring for customers who have not yet churned.
+
+By incorporating these elements, survival analysis provides more actionable insights for time-sensitive retention strategies, such as onboarding interventions, early-lifecycle support, and contract renewal planning.
+
+This project applies time-to-event methods to the IBM telecom customer churn dataset, moving beyond a simple churn/no-churn framework to identify both which customers are at higher risk of churn and when that risk is most pronounced over the course of customer tenure.
 
 ## Project Overview
 
@@ -35,16 +41,6 @@ The workflow covers:
   - `TR = 0.28` in the best AFT model
 - The Cox model and best parametric comparator both achieved an apparent in-sample C-index of about `0.943`.
 - Among parametric models, Gompertz gave the best AIC/BIC trade-off overall, while Generalized Gamma was the best-fitting AFT model by AIC.
-
-## Why Survival Analysis
-
-Standard churn classification predicts whether a customer churns. Survival analysis predicts when churn happens and preserves information that classification usually discards:
-
-- ordering of churn times
-- different exposure lengths across customers
-- right-censoring for customers who have not churned yet
-
-That makes the output more useful for timing-sensitive retention actions such as onboarding interventions, early-lifecycle support, and contract renewal strategy.
 
 ## Methods Used
 
